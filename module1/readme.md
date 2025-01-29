@@ -73,6 +73,8 @@ volumes:
 
 If there are more than one answers, select only one of them
 
+**Ans = db:5432**
+
 ##  Prepare Postgres
 
 Run Postgres and load data as shown in the videos
