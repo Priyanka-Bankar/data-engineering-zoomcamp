@@ -112,6 +112,22 @@ Answers:
 - 104,793;  202,661;  109,603;  27,678;  35,189
 - 104,838;  199,013;  109,645;  27,688;  35,202
 
+***SELECT 
+  COUNT(CASE WHEN trip_distance <= 1 THEN 1 END) AS up_to_1_mile,
+  COUNT(CASE WHEN trip_distance > 1 AND trip_distance <= 3 THEN 1 END) AS between_1_and_3_miles,
+  COUNT(CASE WHEN trip_distance > 3 AND trip_distance <= 7 THEN 1 END) AS between_3_and_7_miles,
+  COUNT(CASE WHEN trip_distance > 7 AND trip_distance <= 10 THEN 1 END) AS between_7_and_10_miles,
+  COUNT(CASE WHEN trip_distance > 10 THEN 1 END) AS over_10_miles
+FROM 
+  green_tripdata_2019_10
+WHERE 
+  lpep_pickup_datetime >= '2019-10-01' AND 
+  lpep_pickup_datetime < '2019-11-01';***
+
+
+"up_to_1_mile"	"between_1_and_3_miles"	"between_3_and_7_miles"	"between_7_and_10_miles"	"over_10_miles"
+   104830	            198995	                 109642	                    27686	                35201
+   
 
 ## Question 4. Longest trip for each day
 
@@ -125,6 +141,14 @@ Tip: For every day, we only care about one single trip with the longest distance
 - 2019-10-26
 - 2019-10-31
 
+***select lpep_pickup_datetime, max(trip_distance) as longest_trip 
+from green_tripdata_2019_10
+group by lpep_pickup_datetime order by longest_trip desc;***
+
+"2019-10-31 23:23:41"	515.89
+"2019-10-11 20:34:21"	95.78
+"2019-10-26 03:02:39"	91.56
+"2019-10-24 10:59:58"	90.75
 
 ## Question 5. Three biggest pickup zones
 
@@ -179,6 +203,8 @@ Answers:
 - terraform init, terraform run -auto-approve, terraform destroy
 - terraform init, terraform apply -auto-approve, terraform destroy
 - terraform import, terraform apply -y, terraform rm
+
+**Ans = terraform init, terraform apply -auto-approve, terraform destroy**
 
 
 ## Submitting the solutions
